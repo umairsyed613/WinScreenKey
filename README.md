@@ -12,6 +12,9 @@ This is the windows version of [Screenkey](https://gitlab.com/screenkey/screenke
 - Auto text clear configurable after x seconds
 - Auto-hide the bar after x seconds configurable
 
+### Credits
+[Icons8 Used](https://icons8.com/)
+
 ### Work in progress
 - Auto minimize to taskbar once started
 - Keyboard special keys and combition presentation is unfinshed
