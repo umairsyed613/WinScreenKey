@@ -3,6 +3,6 @@
 
 This shows which characters you are typing on a popup banner.
 
-This is the windows version of ![Screenkey](https://gitlab.com/screenkey/screenkey/-/tree/master)
+This is the windows version of [Screenkey](https://gitlab.com/screenkey/screenkey/-/tree/master)
 
 ![Sample](https://github.com/umairsyed613/WinScreenKey/blob/master/demo.gif)
