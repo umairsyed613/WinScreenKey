@@ -34,12 +34,12 @@
             // lblKeys
             // 
             this.lblKeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblKeys.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKeys.Font = new System.Drawing.Font("Calibri", 22F);
             this.lblKeys.Location = new System.Drawing.Point(0, 0);
             this.lblKeys.Name = "lblKeys";
-            this.lblKeys.Size = new System.Drawing.Size(800, 142);
+            this.lblKeys.Size = new System.Drawing.Size(800, 106);
             this.lblKeys.TabIndex = 1;
-            this.lblKeys.Text = "label1";
+            this.lblKeys.Text = "KeyData";
             this.lblKeys.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Banner
@@ -47,12 +47,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(800, 142);
+            this.ClientSize = new System.Drawing.Size(800, 106);
             this.Controls.Add(this.lblKeys);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Banner";
             this.Text = "Banner";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Banner_Load);
             this.ResumeLayout(false);
 
