@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using WinScreenKey.Helpers;
+
 namespace WinScreenKey
 {
     public partial class Banner : Form
@@ -79,7 +81,7 @@ namespace WinScreenKey
 
             _keyboardListener.OnSpecialKeyReceived += args =>
                 {
-                    lblKeys.Text += args.KeyData.ToString();
+                    lblKeys.Text += KeysTransformer.GetSpecialKeyAbr(args.KeyData);
                 };
 
         }
@@ -103,6 +105,7 @@ namespace WinScreenKey
         {
             if (keyCode == (char)Keys.Enter)
             {
+                lblKeys.Text += " ⏎ ";
                 return;
             }
 
