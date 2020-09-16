@@ -6,9 +6,13 @@ namespace WinScreenKey
 {
     public partial class MainWindow : Form
     {
+#pragma warning disable IDE1006 // Naming Styles
         public const int WM_NCLBUTTONDOWN = 0xA1;
+#pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
         public const int HT_CAPTION = 0x2;
+#pragma warning restore IDE1006 // Naming Styles
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -18,7 +22,9 @@ namespace WinScreenKey
 
         private static KeyboardListener _keyboardListener;
 
-        private Banner banner;
+        private Banner _banner;
+
+        private static BannerConfigruation _bannerConfguration;
 
         public MainWindow()
         {
@@ -28,8 +34,6 @@ namespace WinScreenKey
         private void MainBanner_Load(object sender, EventArgs e)
         {
             lblTitle.Text = this.Text;
-
-            this.splitter1.BackColor = Color.LightSlateGray;
         }
 
         private void MainWindow_MouseDown(object sender, MouseEventArgs e)
@@ -74,42 +78,159 @@ namespace WinScreenKey
         private void btnStart_Click(object sender, EventArgs e)
         {
             _keyboardListener = new KeyboardListener();
-
             _keyboardListener.OnKeyReceived += KeyboardListenerOnOnKeyReceived;
-            
-            btnStart.Enabled = false;
-            btnStop.Enabled = true;
+
+
+            btnStart.Visible = false;
+            btnStop.Visible = true;
+            lblStatus.Visible = true;
         }
 
         private void KeyboardListenerOnOnKeyReceived(KeyPressEventArgs keyeventargs)
         {
-            if (banner == null)
+            if (_banner == null)
             {
-                this.banner = new Banner(keyeventargs);
+                _banner = new Banner(keyeventargs, _bannerConfguration);
 
-                this.banner.FormClosed += (o, eventArgs) =>
+                _banner.FormClosed += (o, eventArgs) =>
                     {
-                        this.banner = null;
+                        _banner = null;
                     };
 
-                banner.Show(this);
+                _banner.Show(this);
             }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (banner != null)
+            if (_banner != null)
             {
-                banner.Close();
-                banner = null;
+                _banner.Close();
+                _banner = null;
             }
 
             _keyboardListener.OnKeyReceived -= KeyboardListenerOnOnKeyReceived;
-
             _keyboardListener = null;
 
-            btnStart.Enabled = true;
-            btnStop.Enabled = false;
+            btnStart.Visible = true;
+            btnStop.Visible = false;
+            lblStatus.Visible = false;
+        }
+
+        private void btnStyleConfigure_Click(object sender, EventArgs e)
+        {
+            if (fontDlg.ShowDialog(this) != DialogResult.Cancel)
+            {
+                if (_bannerConfguration != null)
+                {
+                    _bannerConfguration.Font = fontDlg.Font;
+                    _bannerConfguration.ForegroundColor = fontDlg.Color;
+                }
+                else
+                {
+                    _bannerConfguration = new BannerConfigruation { Font = fontDlg.Font, ForegroundColor = fontDlg.Color };
+                }
+            }
+        }
+
+        private void btnColorChooser_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (colorDialog1.ShowDialog(this) != DialogResult.Cancel)
+            {
+                if (_bannerConfguration != null)
+                {
+                    _bannerConfguration.BackgroundColor = colorDialog1.Color;
+                }
+                else
+                {
+                    _bannerConfguration = new BannerConfigruation { BackgroundColor = colorDialog1.Color };
+                }
+
+                btnColorChooser.BackColor = _bannerConfguration.BackgroundColor;
+            }
+        }
+
+        private void DrawGroupBox(GroupBox box, Graphics g, Color textColor, Color borderColor)
+        {
+            if (box != null)
+            {
+                Brush textBrush = new SolidBrush(textColor);
+                Brush borderBrush = new SolidBrush(borderColor);
+                Pen borderPen = new Pen(borderBrush);
+                SizeF strSize = g.MeasureString(box.Text, box.Font);
+                Rectangle rect = new Rectangle(box.ClientRectangle.X,
+                                               box.ClientRectangle.Y + (int)(strSize.Height / 2),
+                                               box.ClientRectangle.Width - 1,
+                                               box.ClientRectangle.Height - (int)(strSize.Height / 2) - 1);
+
+                // Clear text and border
+                g.Clear(this.BackColor);
+
+                // Draw text
+                g.DrawString(box.Text, box.Font, textBrush, box.Padding.Left, 0);
+
+                // Drawing Border
+                //Left
+                g.DrawLine(borderPen, rect.Location, new Point(rect.X, rect.Y + rect.Height));
+                //Right
+                g.DrawLine(borderPen, new Point(rect.X + rect.Width, rect.Y), new Point(rect.X + rect.Width, rect.Y + rect.Height));
+                //Bottom
+                g.DrawLine(borderPen, new Point(rect.X, rect.Y + rect.Height), new Point(rect.X + rect.Width, rect.Y + rect.Height));
+                //Top1
+                g.DrawLine(borderPen, new Point(rect.X, rect.Y), new Point(rect.X + box.Padding.Left, rect.Y));
+                //Top2
+                g.DrawLine(borderPen, new Point(rect.X + box.Padding.Left + (int)(strSize.Width), rect.Y), new Point(rect.X + rect.Width, rect.Y));
+            }
+        }
+
+        private void configGroupBox_Paint(object sender, PaintEventArgs e)
+        {
+            GroupBox box = sender as GroupBox;
+            DrawGroupBox(box, e.Graphics, Color.Silver, Color.Gray);
+        }
+
+        private void bannerHeightControl_ValueChanged(object sender, EventArgs e)
+        {
+            if (_bannerConfguration != null)
+            {
+                _bannerConfguration.Height = bannerHeightControl.Value;
+            }
+            else
+            {
+                _bannerConfguration = new BannerConfigruation { Height = bannerHeightControl.Value };
+            }
+
+            lblBannerheight.Text = "Height (" + bannerHeightControl.Value + ")";
+        }
+
+        private void txtTextClearTimeOut_TextChanged(object sender, EventArgs e)
+        {
+            if(double.TryParse(txtTextClearTimeOut.Text, out var val))
+            {
+                if (_bannerConfguration != null)
+                {
+                    _bannerConfguration.TextClearTimeOut = Convert.ToInt32(val * 1000);
+                }
+                else
+                {
+                    _bannerConfguration = new BannerConfigruation { TextClearTimeOut = Convert.ToInt32(val * 1000) };
+                }
+            }
+        }
+
+        private void txtBannerCloseTimeOut_TextChanged(object sender, EventArgs e)
+        {
+            if(double.TryParse(txtBannerCloseTimeOut.Text, out var val))
+            {
+                if (_bannerConfguration != null)
+                {
+                    _bannerConfguration.BannerCloseTimeOut = Convert.ToInt32(val * 1000);
+                }
+                else
+                {
+                    _bannerConfguration = new BannerConfigruation { BannerCloseTimeOut = Convert.ToInt32(val * 1000) };
+                }
+            }
         }
     }
 }

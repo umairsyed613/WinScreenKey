@@ -15,7 +15,7 @@ namespace WinScreenKey
 
         public event SpecialKeyHandler OnSpecialKeyReceived;
 
-        private static readonly List<Keys> specialKeys = new List<Keys>
+        private static readonly List<Keys> _specialKeys = new List<Keys>
                                                              {
                                                                  Keys.Control, Keys.ControlKey, Keys.LControlKey, Keys.RControlKey,
                                                                  Keys.Alt, Keys.LMenu, Keys.RMenu, Keys.Shift, Keys.ShiftKey, Keys.LShiftKey, Keys.RShiftKey
@@ -29,8 +29,7 @@ namespace WinScreenKey
 
         private void KeyboardListener_KeyDown(object sender, KeyEventArgs e)
         {
-
-            if (specialKeys.Contains(e.KeyData))
+            if (_specialKeys.Contains(e.KeyData))
             {
                 OnSpecialKeyReceived?.Invoke(e);
             }

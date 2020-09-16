@@ -57,6 +57,7 @@
     <Compile Include="Banner.Designer.cs">
       <DependentUpon>Banner.cs</DependentUpon>
     </Compile>
+    <Compile Include="BannerConfigruation.cs" />
     <Compile Include="GetLastUserInput.cs" />
     <Compile Include="Helpers\KeysTransformer.cs" />
     <Compile Include="Helpers\MemoryHelper.cs" />
@@ -113,6 +114,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-close-window-24_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-gear-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-start-30 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-stop-squared-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-clear-formatting-40.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
