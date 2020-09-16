@@ -15,4 +15,7 @@ This is the windows version of [Screenkey](https://gitlab.com/screenkey/screenke
 ### Work in progress
 - Auto minimize to taskbar once started
 - Keyboard special keys and combition presentation is unfinshed
+- Save configuration to temp place for next startup
+- auto startup possibility with windows startup
 - Code refactoring and clean code
+
