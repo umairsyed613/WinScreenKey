@@ -18,6 +18,6 @@ jobs:
     - name: Restore packages
       run: nuget restore Src/WinScreenKey/WinScreenKey.sln
     - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
+      uses: microsoft/setup-msbuild@v1
     - name: Build with MSBuild
       run: msbuild Src/WinScreenKey/WinScreenKey.sln -p:Configuration=Release
