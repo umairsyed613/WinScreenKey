@@ -25,6 +25,16 @@ namespace WinScreenKey.Helpers
                 case Keys.LMenu:
                 case Keys.RMenu:
                     return " Alt ";
+                case Keys.Escape:
+                    return " Esc ";
+                case Keys.Delete:
+                    return " Del ";
+                case Keys.Insert:
+                    return " Ins ";
+                case Keys.Home:
+                    return " Home ";
+                case Keys.End:
+                    return " End ";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(key), key, null);

@@ -24,7 +24,7 @@ namespace WinScreenKey
 
         private Banner _banner;
 
-        private static BannerConfigruation _bannerConfguration;
+        private static BannerConfigruation _bannerConfiguration;
 
         public MainWindow()
         {
@@ -90,7 +90,7 @@ namespace WinScreenKey
         {
             if (_banner == null)
             {
-                _banner = new Banner(keyeventargs, _bannerConfguration);
+                _banner = new Banner(keyeventargs, _bannerConfiguration);
 
                 _banner.FormClosed += (o, eventArgs) =>
                     {
@@ -121,14 +121,14 @@ namespace WinScreenKey
         {
             if (fontDlg.ShowDialog(this) != DialogResult.Cancel)
             {
-                if (_bannerConfguration != null)
+                if (_bannerConfiguration != null)
                 {
-                    _bannerConfguration.Font = fontDlg.Font;
-                    _bannerConfguration.ForegroundColor = fontDlg.Color;
+                    _bannerConfiguration.Font = fontDlg.Font;
+                    _bannerConfiguration.ForegroundColor = fontDlg.Color;
                 }
                 else
                 {
-                    _bannerConfguration = new BannerConfigruation { Font = fontDlg.Font, ForegroundColor = fontDlg.Color };
+                    _bannerConfiguration = new BannerConfigruation { Font = fontDlg.Font, ForegroundColor = fontDlg.Color };
                 }
             }
         }
@@ -137,16 +137,16 @@ namespace WinScreenKey
         {
             if (colorDialog1.ShowDialog(this) != DialogResult.Cancel)
             {
-                if (_bannerConfguration != null)
+                if (_bannerConfiguration != null)
                 {
-                    _bannerConfguration.BackgroundColor = colorDialog1.Color;
+                    _bannerConfiguration.BackgroundColor = colorDialog1.Color;
                 }
                 else
                 {
-                    _bannerConfguration = new BannerConfigruation { BackgroundColor = colorDialog1.Color };
+                    _bannerConfiguration = new BannerConfigruation { BackgroundColor = colorDialog1.Color };
                 }
 
-                btnColorChooser.BackColor = _bannerConfguration.BackgroundColor;
+                btnColorChooser.BackColor = _bannerConfiguration.BackgroundColor;
             }
         }
 
@@ -191,13 +191,13 @@ namespace WinScreenKey
 
         private void bannerHeightControl_ValueChanged(object sender, EventArgs e)
         {
-            if (_bannerConfguration != null)
+            if (_bannerConfiguration != null)
             {
-                _bannerConfguration.Height = bannerHeightControl.Value;
+                _bannerConfiguration.Height = bannerHeightControl.Value;
             }
             else
             {
-                _bannerConfguration = new BannerConfigruation { Height = bannerHeightControl.Value };
+                _bannerConfiguration = new BannerConfigruation { Height = bannerHeightControl.Value };
             }
 
             lblBannerheight.Text = "Height (" + bannerHeightControl.Value + ")";
@@ -207,13 +207,13 @@ namespace WinScreenKey
         {
             if(double.TryParse(txtTextClearTimeOut.Text, out var val))
             {
-                if (_bannerConfguration != null)
+                if (_bannerConfiguration != null)
                 {
-                    _bannerConfguration.TextClearTimeOut = Convert.ToInt32(val * 1000);
+                    _bannerConfiguration.TextClearTimeOut = Convert.ToInt32(val * 1000);
                 }
                 else
                 {
-                    _bannerConfguration = new BannerConfigruation { TextClearTimeOut = Convert.ToInt32(val * 1000) };
+                    _bannerConfiguration = new BannerConfigruation { TextClearTimeOut = Convert.ToInt32(val * 1000) };
                 }
             }
         }
@@ -222,13 +222,13 @@ namespace WinScreenKey
         {
             if(double.TryParse(txtBannerCloseTimeOut.Text, out var val))
             {
-                if (_bannerConfguration != null)
+                if (_bannerConfiguration != null)
                 {
-                    _bannerConfguration.BannerCloseTimeOut = Convert.ToInt32(val * 1000);
+                    _bannerConfiguration.BannerCloseTimeOut = Convert.ToInt32(val * 1000);
                 }
                 else
                 {
-                    _bannerConfguration = new BannerConfigruation { BannerCloseTimeOut = Convert.ToInt32(val * 1000) };
+                    _bannerConfiguration = new BannerConfigruation { BannerCloseTimeOut = Convert.ToInt32(val * 1000) };
                 }
             }
         }

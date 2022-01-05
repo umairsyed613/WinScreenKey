@@ -15,21 +15,32 @@ namespace WinScreenKey
 
         public event SpecialKeyHandler OnSpecialKeyReceived;
 
-        private static readonly List<Keys> _specialKeys = new List<Keys>
+        private static readonly List<Keys> SpecialKeys = new List<Keys>
                                                              {
                                                                  Keys.Control, Keys.ControlKey, Keys.LControlKey, Keys.RControlKey,
-                                                                 Keys.Alt, Keys.LMenu, Keys.RMenu, Keys.Shift, Keys.ShiftKey, Keys.LShiftKey, Keys.RShiftKey
+                                                                 Keys.Alt, Keys.LMenu, Keys.RMenu, Keys.Shift, Keys.ShiftKey, Keys.LShiftKey, Keys.RShiftKey,
+                                                                 Keys.Escape, Keys.End, Keys.Delete, Keys.Insert, Keys.Home
                                                              };
 
         public KeyboardListener()
         {
-            Hook.GlobalEvents().KeyPress += (sender, e) => OnKeyReceived?.Invoke(e);
+            Hook.GlobalEvents().KeyPress += OnKeyPress;
             Hook.GlobalEvents().KeyDown += KeyboardListener_KeyDown;
+        }
+
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Escape)
+            {
+                return;
+            }
+
+            OnKeyReceived?.Invoke(e);
         }
 
         private void KeyboardListener_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_specialKeys.Contains(e.KeyData))
+            if (SpecialKeys.Contains(e.KeyData))
             {
                 OnSpecialKeyReceived?.Invoke(e);
             }
